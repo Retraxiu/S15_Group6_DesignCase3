@@ -178,11 +178,14 @@ public class assets {
             hoa_namelist.clear();
             enclosing_assetlist.clear();
             // build dropdowns
-            PreparedStatement pstmt = conn.prepareStatement("SELECT asset_id FROM assets WHERE status !='X'");
+            PreparedStatement pstmt = conn
+                    .prepareStatement("SELECT asset_id, asset_name FROM assets WHERE status !='X'");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) { // asset dropdown
                 asset_id = rs.getInt("asset_id");
+                asset_name = rs.getString("asset_name");
                 asset_idlist.add(asset_id);
+                asset_namelist.add(asset_name);
             }
             pstmt = conn.prepareStatement("SELECT hoa_name AS association_name FROM hoa");
             rs = pstmt.executeQuery();
@@ -200,7 +203,7 @@ public class assets {
 
             // get original row data
             pstmt = conn.prepareStatement("SELECT * FROM assets WHERE asset_id=?");
-            pstmt.setInt(1, asset_id);
+            rs = pstmt.executeQuery();
             // 4. Prepare our INSERT Statement
             pstmt = conn.prepareStatement("UPDATE assets    " +
                     "SET    asset_name   = ?,      " +
