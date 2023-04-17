@@ -164,8 +164,45 @@ public class assets {
                     "jdbc:mysql://localhost:3306/HOADB?useTimezone=true&serverTimezone=UTC&user=root&password=12345678");
             // 3. Indicate a notice of successful connection
             System.out.println("Connection Successful");
+            // clear arraylists
+            asset_idlist.clear();
+            asset_namelist.clear();
+            asset_descriptionlist.clear();
+            acquisition_datelist.clear();
+            forrentlist.clear();
+            asset_valuelist.clear();
+            type_assetlist.clear();
+            statuslist.clear();
+            loc_lattitudelist.clear();
+            loc_longiturelist.clear();
+            hoa_namelist.clear();
+            enclosing_assetlist.clear();
+            // build dropdowns
+            PreparedStatement pstmt = conn.prepareStatement("SELECT asset_id FROM assets WHERE status !='X'");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) { // asset dropdown
+                asset_id = rs.getInt("asset_id");
+                asset_idlist.add(asset_id);
+            }
+            pstmt = conn.prepareStatement("SELECT hoa_name AS association_name FROM hoa");
+            rs = pstmt.executeQuery();
+            while (rs.next()) { // association dropdown
+                hoa_name = rs.getString("association_name");
+                hoa_namelist.add(hoa_name);
+            }
+            // dropdown list 2
+            pstmt = conn.prepareStatement("SELECT asset_id as enclosing_ID from assets WHERE type_asset = 'P'");
+            rs = pstmt.executeQuery();
+            while (rs.next()) {// enlcosing_asset dropdown
+                enclosing_asset = rs.getInt("enclosing_ID");
+                enclosing_assetlist.add(enclosing_asset);
+            }
+
+            // get original row data
+            pstmt = conn.prepareStatement("SELECT * FROM assets WHERE asset_id=?");
+            pstmt.setInt(1, asset_id);
             // 4. Prepare our INSERT Statement
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE assets    " +
+            pstmt = conn.prepareStatement("UPDATE assets    " +
                     "SET    asset_name   = ?,      " +
                     "       asset_description = ?,       " +
                     "       acquisition_date = ?,       " +

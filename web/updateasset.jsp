@@ -10,9 +10,17 @@
     <body>
         <h1>Update Asset Information</h1>
         <h2>Please type in the details of the asset</h2>
-        <jsp:useBean id="arBean" class="assetandrental.handler" scope="session" />
+        <jsp:useBean id="A" class="assetandrental.assets" scope="session" />
         <form name="selectproduct" action="update.jsp" method="POST">
-            Enter ID [Unique] - <input type="text" name="asset_id" id="asset_id"><br>
+            Enter ID [Unique] - <select name="asset_id" id="asset_id">    
+                <%
+                A.updateRecord;
+                for(int i = 0; i < A.asset_idlist.size();i++) { 
+                %>
+                    <option value="<%=A.asset_idlist.get(i)%>"><%=A.asset_namelist.get(i)%></option>
+                <%}
+                %>
+            </select><br>
             Enter Asset Name - <input type="text" name="asset_name" id="asset_name"><br>
             Enter Asset Description - <input type="text" name="asset_description" id="asset_description"><br>
             Enter Acquisition Date [yyyy-mm-dd] - <input type="date" name="acquisition_date" id="acquisition_date"><br>
@@ -27,7 +35,6 @@
             Enter Longitude - <input type="text" name="loc_longitude" id="loc_longitude"><br>
             Enter HOA Name - <select name="hoa_name" id="hoa_name">
                 <%
-                A.register_asset();
                 for(int i = 0; i < A.hoa_namelist.size();i++) { 
                 %>
                     <option value="<%=A.hoa_namelist.get(i)%>"><%=A.hoa_namelist.get(i)%></option>
