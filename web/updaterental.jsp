@@ -11,7 +11,13 @@
         <h2>Please type in the details of the rental</h2>
         <jsp:useBean id="arBean" class="assetandrental.handler" scope="session" />
         <form name="recordrental" action="update_r.jsp" method="POST">
-            Enter Asset ID - <input type="text" name="asset_id" id="asset_id"><br>
+            Enter Asset ID - <select name="asset_id" id="asset_id">
+                <%A.updateRental(); //placeholder
+                for(int i = 0; i < A.asset_idlist.size(); i++) {%>
+                    <option value="<%=asset_idlist.get(i)%>"<%=A.asset_namelist.get(i)%></option>
+                <%}
+                %>    
+            </select><br>
             Enter Rental Date - <input type="text" name="rental_date" id="rental_date"><br>
             Enter Reservation Date - <input type="text" name="reservation_date" id="reservation_date"><br>
             Enter Resident ID - <input type="text" name="resident_id" id="resident_id"><br>
