@@ -24,15 +24,28 @@
             Enter Asset Name - <input type="text" name="asset_name" id="asset_name"><br>
             Enter Asset Description - <input type="text" name="asset_description" id="asset_description"><br>
             Enter Acquisition Date [yyyy-mm-dd] - <input type="date" name="acquisition_date" id="acquisition_date"><br>
-            Enter For Rent [true/false] - <input type="text" name="forrent" id="forrent"><br>
-            Enter Asset Type - <input type="text" name="type_asset" id="type_asset"><br>
-            Enter Asset Value - <input type="text" name="asset_value" id="asset_value"><br>
-            Enter Status - <select name="status" id="status">
+            Enter For Rent [true/false] - <select name="forrent" id="forrent">
                 <option value="true">1</option>
                 <option value="false">0</option>
             </select><br>
-            Enter Latitude - <input type="text" name="loc_lattitude" id="loc_lattitude"><br>
-            Enter Longitude - <input type="text" name="loc_longitude" id="loc_longitude"><br>
+            Enter Asset Type - <select name="type_asset" id="type_asset">
+                <option value = "P">Property</option>
+                <option value = "E">Equipment</option>
+                <option value = "F">Furniture</option>
+                <option value = "O">Fixture</option>
+            </select><br>
+            Enter Asset Value - <input type="text" name="asset_value" id="asset_value"><br>
+            Enter Status - <select name="status" id="status">
+                <option value = "W">Working</option>
+                <option value = "D">Deteriorated</option>
+                <option value = "R">Repair</option>
+                <option value = "S">For Disposal</option>
+                <option value = "X">Disposed</option>
+            </select><br>
+            <label for="loc_lattitude:">Latitude:</label>
+            <input type="number" id=""loc_lattitude name="loc_lattitude" step="0.02"><br>
+            <label for="loc_longiture:">Longitude:</label>
+            <input type="number" id="loc_longiture" name="loc_longiture" step="0.02"><br>
             Enter HOA Name - <select name="hoa_name" id="hoa_name">
                 <%
                 for(int i = 0; i < A.hoa_namelist.size();i++) { 
