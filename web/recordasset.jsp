@@ -7,9 +7,8 @@
     </head>
     <body>
         <h1>Recording Asset</h1>
-        <jsp:useBean id="arBean" class="assetandrental.handler" scope="session" />
+        <jsp:useBean id="arBean" class="assetandrental.assets" scope="session" />
         <%
-            int asset_id               = arBean.getAvailableID();
             String asset_name          = request.getParameter("asset_name");
             String asset_description   = request.getParameter("asset_description");
             String acquisition_date    = request.getParameter("acquisition_date");
