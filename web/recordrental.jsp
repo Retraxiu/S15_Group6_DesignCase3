@@ -37,10 +37,13 @@
             </select><br>
             Enter Inspection Details - <input type="text" name="inspection_details" id="inspection_details"><br>
             Enter Assessed Value - <input type="text" name="assessed_value" id="assessed_value"><br>
-            Enter Accepting Officer's ID - <input type="text" name="accept_hoid" id="accept_hoid"><br>
-            Enter Accepting Officer's Position - <input type="text" name="accept_position" id="accept_position"><br>
-            Enter Accepting Officer's Election Date - <input type="text" name="accept_electiondate" id="accept_electiondate"><br>
-            Enter Return Date - <input type="text" name="return_date" id="return_date"><br>
+            Enter Accepting Officer's ID - <select name="accept_hoid" id="accept_hoid">
+                <% for(int i = 0; i < A.accept_hoidlist.size();i++) {%>
+                    <option value="<%=A.accept_hoidlist.get(i)%>"<%=A.accept_hoidlist.get(i)%></option>  
+                <%}
+                %>      
+            </select><br>
+            Enter Return Date - <input type="date" name="return_date" id="return_date"><br>
             <input type="submit" value="Add to database" name="Add to database" />
         </form>
         <form name="Back to main menu" action="index.jsp" method = "POST">

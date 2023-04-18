@@ -3,8 +3,6 @@ package assetandrental;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.swing.text.Position;
-
 // products data access object
 public class asset_rentals {
 
@@ -29,7 +27,7 @@ public class asset_rentals {
     public asset_rentals() {
     }; // Constructor of the DAO
 
-    public int addRecord() { // Method add a Record
+    public void addRental_build() {
         try {
             // 1. Instantiate a connection variable
             Connection conn;
@@ -55,7 +53,6 @@ public class asset_rentals {
                 resident_id = rs.getInt("resident_id");
                 resident_idlist.add(resident_id);
             }
-
             pstmt = conn.prepareStatement("SELECT ho_id FROM officer");
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -71,8 +68,26 @@ public class asset_rentals {
                 accept_electiondate = rs.getString("election_date");
             }
 
+            pstmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public int addRecord() { // Method add a Record
+        try {
+            // 1. Instantiate a connection variable
+            Connection conn;
+            // 2. Connect to your DB
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/HOADB?useTimezone=true&serverTimezone=UTC&user=root&password=12345678");
+            // 3. Indicate a notice of successful connection
+            System.out.println("Connection Successful");
             // 4. Prepare our INSERT Statement
-            pstmt = conn.prepareStatement("INSERT INTO asset_rentals VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pstmt = conn
+                    .prepareStatement("INSERT INTO asset_rentals VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             // 5. Supply the statement with values
             int x = 0;
 

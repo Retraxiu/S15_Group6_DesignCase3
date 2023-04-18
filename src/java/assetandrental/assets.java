@@ -35,7 +35,7 @@ public class assets {
     public assets() {
     }; // Constructor of the DAO
 
-    public int addRecord() { // Method add a Record
+    public void addRecord_build() {
         try {
             // 1. Instantiate a connection variable
             Connection conn;
@@ -58,14 +58,9 @@ public class assets {
             hoa_namelist.clear();
             enclosing_assetlist.clear();
             // 4. Drop-Down Lists
-            PreparedStatement pstmt = conn.prepareStatement("SELECT MAX(asset_id) + 1 AS newID FROM assets");
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                asset_id = rs.getInt("newID");
-            }
             // for dropdown list
-            pstmt = conn.prepareStatement("SELECT hoa_name AS association_name FROM hoa");
-            rs = pstmt.executeQuery();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT hoa_name AS association_name FROM hoa");
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 hoa_name = rs.getString("association_name");
                 hoa_namelist.add(hoa_name);
@@ -76,6 +71,29 @@ public class assets {
             while (rs.next()) {
                 enclosing_asset = rs.getInt("enclosing_ID");
                 enclosing_assetlist.add(enclosing_asset);
+            }
+            pstmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public int addRecord() { // Method add a Record
+        try {
+            // 1. Instantiate a connection variable
+            Connection conn;
+            // 2. Connect to your DB
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/HOADB?useTimezone=true&serverTimezone=UTC&user=root&password=12345678");
+            // 3. Indicate a notice of successful connection
+            System.out.println("Connection Successful");
+            // 4. Drop-Down Lists
+            PreparedStatement pstmt = conn.prepareStatement("SELECT MAX(asset_id) + 1 AS newID FROM assets");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                asset_id = rs.getInt("newID");
             }
             // 4.5 Prepare our INSERT Statement
             pstmt = conn.prepareStatement("INSERT INTO assets VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -93,7 +111,7 @@ public class assets {
             pstmt.setDouble(10, loc_longitude);
             pstmt.setString(11, hoa_name);
             if (enclosing_asset == 0) {
-                pstmt.setNull(12, enclosing_asset);
+                pstmt.setNull(12, Types.INTEGER);
             } else {
                 pstmt.setInt(12, enclosing_asset);
             }
@@ -155,7 +173,7 @@ public class assets {
         }
     }
 
-    public int updateRecord() { // Method modify a Record
+    public void updateRecord_build() {
         try {
             // 1. Instantiate a connection variable
             Connection conn;
@@ -164,7 +182,7 @@ public class assets {
                     "jdbc:mysql://localhost:3306/HOADB?useTimezone=true&serverTimezone=UTC&user=root&password=12345678");
             // 3. Indicate a notice of successful connection
             System.out.println("Connection Successful");
-            // clear arraylists
+            // 3.5 Clearing Array Lists
             asset_idlist.clear();
             asset_namelist.clear();
             asset_descriptionlist.clear();
@@ -177,6 +195,7 @@ public class assets {
             loc_longiturelist.clear();
             hoa_namelist.clear();
             enclosing_assetlist.clear();
+            // 4. Drop-Down Lists
             // build dropdowns
             PreparedStatement pstmt = conn
                     .prepareStatement("SELECT asset_id, asset_name FROM assets WHERE status !='X'");
@@ -201,9 +220,27 @@ public class assets {
                 enclosing_assetlist.add(enclosing_asset);
             }
 
+            pstmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public int updateRecord() { // Method modify a Record
+        try {
+            // 1. Instantiate a connection variable
+            Connection conn;
+            // 2. Connect to your DB
+            conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/HOADB?useTimezone=true&serverTimezone=UTC&user=root&password=12345678");
+            // 3. Indicate a notice of successful connection
+            System.out.println("Connection Successful");
+
             // get original row data
-            pstmt = conn.prepareStatement("SELECT * FROM assets WHERE asset_id=?");
-            rs = pstmt.executeQuery();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM assets WHERE asset_id=?");
+            ResultSet rs = pstmt.executeQuery();
             // 4. Prepare our INSERT Statement
             pstmt = conn.prepareStatement("UPDATE assets    " +
                     "SET    asset_name   = ?,      " +
