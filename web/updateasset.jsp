@@ -14,7 +14,7 @@
         <form name="selectproduct" action="update.jsp" method="POST">
             Enter ID [Unique] - <select name="asset_id" id="asset_id">    
                 <%
-                A.updateRecord;
+                A.updateRecord_build();
                 for(int i = 0; i < A.asset_idlist.size();i++) { 
                 %>
                     <option value="<%=A.asset_idlist.get(i)%>"><%=A.asset_namelist.get(i)%></option>

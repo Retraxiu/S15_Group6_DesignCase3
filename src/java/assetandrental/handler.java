@@ -221,17 +221,17 @@ public class handler {
          PreparedStatement pstmt = conn.prepareStatement("SELECT asset_id FROM assets ORDER BY asset_id ASC");
          ResultSet rs = pstmt.executeQuery();
 
-         ArrayList<Integer> idList = new ArrayList<Integer>();
+         a.asset_idlist.clear();
 
          while (rs.next()) {
-            idList.add(rs.getInt("asset_id"));
+            a.asset_idlist.add(rs.getInt("asset_id"));
          }
 
          rs.close();
          pstmt.close();
          conn.close();
 
-         int i = idList.get(idList.size() - 1) + 1;
+         int i = a.asset_idlist.get(a.asset_idlist.size() - 1) + 1;
 
          return i;
       } catch (SQLException ex) {

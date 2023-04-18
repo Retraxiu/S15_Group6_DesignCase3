@@ -46,7 +46,7 @@
             <input type="number" id="loc_longiture" name="loc_longiture" step="0.02"><br>
             HOA Name:<select id="hoa_name" name="hoa_name">
             <%
-                A.addRecord();
+                A.addRecord_build();
                 for(int i = 0; i < A.hoa_namelist.size();i++) { 
             %>
             <option value="<%=A.hoa_namelist.get(i)%>"><%=A.hoa_namelist.get(i)%></option>
